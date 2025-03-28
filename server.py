@@ -2,6 +2,7 @@ import socket
 
 HOST = "127.0.0.1"
 PORT = 6666
+MESSAGE = b"I can see that"
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
@@ -13,6 +14,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while True:
             data = conn.recv(1024)
             print(f'Received {data}')
+            conn.sendall(MESSAGE)
             if not data:
                 break
             conn.sendall(data)
