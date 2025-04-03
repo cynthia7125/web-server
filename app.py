@@ -1,15 +1,8 @@
 import requests
 import streamlit as st
-# import streamlit_lottie as st_lottie
 from PIL import Image
 
 st.set_page_config(page_title="Meme Clock", page_icon=":joy_cat:", layout="wide")
-
-# def load_lottieurl(url):
-#     r = requests.get(url)
-#     if r.status_code != 200:
-#         return None
-#     return r
 
 lottie_happy = "https://media1.tenor.com/m/nbL93v_tG40AAAAC/dfv-gme.gif"
 img_LinkedIn =  Image.open("images/LinkedIn profile.png")
@@ -47,6 +40,34 @@ with st.container():
     with right_column:
         st.image(lottie_happy, width=700)
 
+with st.container():
+    st.write("---")
+    st.header("Form Entries")
+    st.write("#####")
+    form, table = st.columns((1, 2))
+
+    with form:
+        with st.form("fix_data"):
+            fn = st.text_input('First Name', placeholder='What\'s your first name?')
+            sn = st.text_input('Second Name', placeholder='What\'s your second name?')
+            age = st.number_input('Phone age', 0)
+            pt = st.selectbox('Phone type', ['Samsung', 'iPhone', 'Redmi', 'Nothing', 'htc', 'Realmi', 'Huawei', 'Microsoft'], placeholder='Select one', index=None)
+            ask = st.selectbox('Fix ask', ['Trade in', 'Get a new one', 'Get protector', 'Fix broken camera', 'Fix broken screen', 'Fix broken back', 'Fix battery issue', 'Fix charging port'], placeholder='Select one', index=None)
+            st.form_submit_button('Submit my request')
+
+    with table:
+        # st.cache_data
+        df = st.dataframe(
+            {
+                "First Name": [fn],
+                "second Name": [sn],
+                "age": [age],
+                "Phone type": [pt],
+                "Ask": [ask]
+            }
+        )
+    # st.session_state(table)
+    
 with st.container():
     st.write("---")
     st.header("My Projects")
