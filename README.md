@@ -95,6 +95,12 @@ sudo rm /opt/homebrew/var/run/nginx.pid
 
 brew services restart nginx
 ```
+3. Illegal characters
+
+```
+error package.json: Name contains illegal characters
+```
+- There was a random package.json in my root folder I somehow missed with a non-compliant name field ("Name"), deleting it resolved everything.
 
 # Mistakes I Made  
 

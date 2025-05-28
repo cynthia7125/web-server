@@ -42,9 +42,9 @@ if not st.session_state.logged_in:
 
     with signup_tab:
         with st.form("signup_form"):
-            uname = st.text_input('Username', key="signup_username")
-            email_s = st.text_input('Email', key="signup_email")
-            pas_s = st.text_input('Password', type='password', key="signup_pass")
+            uname = st.text_input('Username', key="signup_username", placeholder="Enter your username")
+            email_s = st.text_input('Email', key="signup_email", placeholder="Enter your email")
+            pas_s = st.text_input('Password', type='password', key="signup_pass", placeholder="Enter your password")
             submit_s = st.form_submit_button("Sign Up")
 
         if submit_s:
@@ -69,9 +69,8 @@ if not st.session_state.logged_in:
 
     with login_tab:
         with st.form("login_form"):
-            email_l = st.text_input('Email', key="login_email")
-            uname_l = st.text_input('Username', key="login_username")
-            pas_l = st.text_input('Password', type='password', key="login_pass")
+            email_l = st.text_input('Email', key="login_email", placeholder="Enter your email")
+            pas_l = st.text_input('Password', type='password', key="login_pass", placeholder="Enter your password")
             submit_l = st.form_submit_button("Log In")
 
         if submit_l:
