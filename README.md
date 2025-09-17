@@ -102,4 +102,9 @@ brew services restart nginx
    - The site was always unreachable, and I couldn’t find a solution online. Eventually, I realized that my IP kept changing, which led me to focus on the IP address itself. That’s when I noticed the issue—my local machine’s IP was incorrect, and it was never going to work.  
 
 2. **Running the IP without the `:PORT` extension.**  
-   - This caused WebSocket issues, making the app continuously load without displaying any content. Adding the correct port resolved the issue.  
+   - This caused WebSocket issues, making the app continuously load without displaying any content. Adding the correct port resolved the issue. 
+
+
+# New Collaborators
+
+   - Hello everyone my name is Shane and I am a new collaborator on the project. I hope you enjoy running it and I'm happy to be onboard.
