@@ -1,6 +1,6 @@
 # Setting up an NGINX server
 
-## Install NGINX
+## 1. Install NGINX
 
 ```
 brew install nginx
@@ -8,7 +8,8 @@ nginx
 nginx -s reload
 ```
 
-## Create an env
+
+## 2. Create a Python Environment
 
 ```
 python3 -m venv streamlit_env
@@ -20,21 +21,20 @@ pip install -r requirements.txt // Done only if you have dependencies in a file 
 
 CMD lines should begin with the specified env name. In my case "streamlit_env"
 
-## Run my streamlit page in the background
+## 3. Run Streamlit in the Background
 
 ```
 nohup streamlit run app.py --server.port 8503 --server.enableCORS false --server.headless true > streamlit.log 2>&1 &
 
 ```
 
-Since we can not run it on our browser becasue it is running in the created environment and not our locan machine we use the below command to check that it is up and running:
+To verify it’s running:
 
 ```
 ps aux | grep streamlit
 ```
 
-## Configure nginx
-
+## 4. Configure NGINX
 Edit config file from the CMD using the nano command.
 Save to a .conf file in your folder.
 Access config file using:
@@ -49,57 +49,34 @@ Test the configurations using:
 sudo nginx -t
 ```
 
-If successful, restart the nginx server.
-
-# Issues I run into
-
-1. Nginx was not running:
+Restart NGINX if successful:
 
 ```
-nginx (homebrew.mxcl.nginx)
-Running: ✘
-Loaded: ✔
-Schedulable: ✘
+sudo nginx -s reload
 ```
 
-- To fix it in my case I run:
+## Common Issues and Fixes
+- **Nginx not running**:
+  - Kill processes occupying ports 80 and 443:
+    ```bash
+    sudo lsof -i :80
+    sudo lsof -i :443
+    sudo kill -9 $(sudo lsof -t -i :80)
+    sudo kill -9 $(sudo lsof -t -i :443)
+    ```
+  - Remove existing PID file and restart NGINX:
+    ```bash
+    sudo rm /opt/homebrew/var/run/nginx.pid
+    brew services restart nginx
+    ```
 
-```
-sudo lsof -i :80
-sudo lsof -i :443
-sudo kill -9 `sudo lsof -t -i :80`
-sudo kill -9 `sudo lsof -t -i :443`
-```
-
-- This sort of restarted my environment and when I started nginx this is what I got:
-
-```
-nginx (homebrew.mxcl.nginx)
-Running: ✔
-Loaded: ✔
-Schedulable: ✘
-User: root
-```
-
-2. Permission Denied
-
-```
-web server % nginx
-nginx: [emerg] open() "/opt/homebrew/var/run/nginx.pid" failed (13: Permission denied)
+- **Permission Denied**:
+  - Ensure you have root privileges for NGINX commands.
 ```
 
-- To fix the above in my case I run:
-
-```
-sudo rm /opt/homebrew/var/run/nginx.pid
-
-brew services restart nginx
-```
-
-# Mistakes I Made  
-
-1. **Using my local machine's IP address as the server name in the config file instead of the virtual machine's IP.**  
-   - The site was always unreachable, and I couldn’t find a solution online. Eventually, I realized that my IP kept changing, which led me to focus on the IP address itself. That’s when I noticed the issue—my local machine’s IP was incorrect, and it was never going to work.  
-
-2. **Running the IP without the `:PORT` extension.**  
-   - This caused WebSocket issues, making the app continuously load without displaying any content. Adding the correct port resolved the issue.  
+## Mistakes to Avoid
+- **Incorrect Server IP**:
+  Use the **virtual machine’s IP address**, not your local machine’s, as the server name in your config file.
+  
+- **Missing Port in IP**:
+  Always include the `:PORT` extension (e.g., `192.168.1.100:8503`) to avoid WebSocket issues.
